@@ -9,7 +9,7 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=meshcentraladmin
       - MONGO_INITDB_ROOT_PASSWORD=meshcentralpassword
     volumes:
-      - mongodb_data:/data/db
+      - ./data/mongodb:/data/db
     networks:
       - meshcentral-network
     ports:
@@ -40,8 +40,8 @@ services:
         - MONGODB_URL=mongodb://meshcentraladmin:meshcentralpassword@mongodb:27017/meshcentral
         - MONGODB_NAME=meshcentral
     volumes:
-      - meshcentral_data:/home/node/app/meshcentral-data
-      - meshcentral_files:/home/node/app/meshcentral-files
+      - ./data/meshcentral_data:/home/node/app/meshcentral-data
+      - ./data/meshcentral_files:/home/node/app/meshcentral-files
     ports:
       - "443:443"
       - "80:80"  
@@ -54,8 +54,3 @@ services:
 networks:
   meshcentral-network:
     driver: bridge
-
-volumes:
-  mongodb_data:
-  meshcentral_data:
-  meshcentral_files:
