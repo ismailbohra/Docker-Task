@@ -15,7 +15,7 @@ Create a Dockerfile for setting up a containerized instance of MeshCentral, with
 - Connected all services using a **custom Docker network**.
 - Used **named volumes** to ensure data persistence even if containers are stopped or deleted.
 - Exposed necessary ports for accessing:
-  - MeshCentral dashboard via `https://localhost`
+  - MeshCentral dashboard via `http://localhost`
   - Mongo Express via `http://localhost:8081`
 
 ## ⚙️ Services Overview
@@ -36,9 +36,7 @@ Create a Dockerfile for setting up a containerized instance of MeshCentral, with
 - Main remote access server.
 - Uses MongoDB as backend (`USE_MONGODB=true`).
 - Accessible via:
-  - `http://localhost` (auto-redirects to HTTPS)
-  - `https://localhost` (main web interface)
-  - `https://localhost:4433` (for agent relay)
+  - `http://localhost` 
 
 ## 🚀 How to Run
 
