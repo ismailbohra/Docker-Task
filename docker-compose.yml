@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: meshcentral-mongodb
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=meshcentraladmin
+      - MONGO_INITDB_ROOT_PASSWORD=meshcentralpassword
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - meshcentral-network
+    ports:
+      - "27017:27017"
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: meshcentral-mongo-express
+    restart: unless-stopped
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=meshcentraladmin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=meshcentralpassword
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongodb
+    networks:
+      - meshcentral-network
+
+  meshcentral:
+    image: typhonragewind/meshcentral:latest
+    container_name: meshcentral
+    restart: unless-stopped
+    environment:
+        - HOSTNAME=localhost
+        - USE_MONGODB=true
+        - MONGODB_URL=mongodb://meshcentraladmin:meshcentralpassword@mongodb:27017/meshcentral
+        - MONGODB_NAME=meshcentral
+    volumes:
+      - meshcentral_data:/home/node/app/meshcentral-data
+      - meshcentral_files:/home/node/app/meshcentral-files
+    ports:
+      - "443:443"
+      - "80:80"  
+      - "4433:4433" 
+    depends_on:
+      - mongodb
+    networks:
+      - meshcentral-network
+
+networks:
+  meshcentral-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+  meshcentral_data:
+  meshcentral_files:
