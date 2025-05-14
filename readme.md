@@ -28,6 +28,9 @@ Create a Dockerfile for setting up a containerized instance of MeshCentral, with
 ### 2. `mongo-express`
 - GUI to monitor and interact with MongoDB.
 - Accessible at: `http://localhost:8081`.
+- Login Credentials:
+    - Username: admin
+    - Password: pass
 
 ### 3. `meshcentral`
 - Main remote access server.
